@@ -127,7 +127,7 @@ for x in x_values:
     direct_diff = [cos_diff_direct(x, delta) for delta in delta_values] # These arrays calculate the outputs for each delta perturbation value
     manip_diff = [cos_diff_manip(x, delta) for delta in delta_values]
 
-    plt.loglog(delta_values, np.abs(np.array(direct_diff) - np.array(manip_diff)), label=f'x = {x}')
+    plt.loglog(delta_values, np.abs(np.array(direct_diff) - np.array(manip_diff)), label=f'x = {x}') # Plots data with both axes on a logarithmic scale
     
 plt.xlabel('Delta')
 plt.ylabel('Absolute Difference')

@@ -118,7 +118,7 @@ def cos_diff_manip(x, delta):
 x_values = [np.pi, 1e6]
 
 # Define delta values
-delta_values = np.logspace(-16, 0, num=16)
+delta_values = np.logspace(-16, 0, num=16) # This function uses a numpy function to create a array containing a exponential base 10 scale accoring to the exponents listed in the parameters
 
 # Plotting
 plt.figure(figsize=(10, 5))

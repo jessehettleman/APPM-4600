@@ -1,0 +1,1 @@
+This repository contains a README.md file, a Homework folder containing a copy of my homework 1, and a Labs folder containing a copy of my work from lab 1.

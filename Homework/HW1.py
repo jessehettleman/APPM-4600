@@ -124,7 +124,7 @@ delta_values = np.logspace(-16, 0, num=16) # This function uses a numpy function
 plt.figure(figsize=(10, 5))
 
 for x in x_values:
-    direct_diff = [cos_diff_direct(x, delta) for delta in delta_values]
+    direct_diff = [cos_diff_direct(x, delta) for delta in delta_values] # These arrays calculate the outputs for each delta perturbation value
     manip_diff = [cos_diff_manip(x, delta) for delta in delta_values]
 
     plt.loglog(delta_values, np.abs(np.array(direct_diff) - np.array(manip_diff)), label=f'x = {x}')

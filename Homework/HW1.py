@@ -112,7 +112,7 @@ def cos_diff_direct(x, delta):
     return np.cos(x + delta) - np.cos(x) # This function takes in an x value and a perturbation delta and returns the cosine difference
 
 def cos_diff_manip(x, delta):
-    return -2 * np.sin((2*x + delta) / 2) * np.sin(delta / 2)
+    return -2 * np.sin((2*x + delta) / 2) * np.sin(delta / 2) # This function uses a trigonometric identity to avoid subtraction
 
 # Define x values
 x_values = [np.pi, 1e6]

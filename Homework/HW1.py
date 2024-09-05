@@ -73,7 +73,7 @@ r2_re_c = abs((r2_actual - r2_rearrange_c) / r2_actual) * 100
 print("Rearrange c Equation Error: ", (r1_re_c,r2_re_c))
 
 
-# -----Problem 4-----
+# -----Problem 5-----
 
 # Part a
 
@@ -109,7 +109,7 @@ rel_error_large = abs_error_large / abs(y_large)
 
 # Function to compute direct difference and modified expression
 def cos_diff_direct(x, delta):
-    return np.cos(x + delta) - np.cos(x)
+    return np.cos(x + delta) - np.cos(x) # This function takes in an x value and a perturbation delta and returns the cosine difference
 
 def cos_diff_manip(x, delta):
     return -2 * np.sin((2*x + delta) / 2) * np.sin(delta / 2)

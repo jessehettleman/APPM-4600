@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import math
 import random
 
-# test
 # -----Problem 2-----
 
 # Initialize Matrices

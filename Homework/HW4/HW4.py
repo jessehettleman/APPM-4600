@@ -56,6 +56,30 @@ def bisection(f,a,b,tol):
     ier = 0
     return [astar, ier, count]
 
+def fixedpt(f,x0,tol,Nmax):
+
+    ''' x0 = initial guess''' 
+    ''' Nmax = max number of iterations'''
+    ''' tol = stopping tolerance'''
+
+    approx = np.zeros((Nmax,1))
+
+    count = 0
+    while (count <Nmax):
+       x1 = f(x0)
+       approx[count] = x1
+       if (abs(x1-x0) <tol):
+          xstar = x1
+          ier = 0
+          count += 1
+          return [xstar,ier,approx,count]
+       x0 = x1
+       count = count +1
+
+    xstar = x1
+    ier = 1
+    return [xstar, ier,approx,count]
+
 # Question 1
 
 def question1():
@@ -85,5 +109,73 @@ def question1():
     print('f(astar) =', f(astar))
     print('number of iterations = ', count)
 
-question1()
+    print("Newton Method:")
 
+    f_deriv = lambda x: (2/(1.69161697792*math.pi))*math.e**((-x/1.69161697792)**2)
+
+    g = lambda x: x - (f(x)/f_deriv(x))
+    Nmax = 100
+    tol = 1e-6
+
+    x0 = 0.01
+    [xstar,ier,approx,count] = fixedpt(g,x0,tol,Nmax)
+    print('the approximate fixed point is:',xstar)
+    print('g(xstar):',g(xstar))
+    print('Error message reads:',ier)
+    print(approx)
+
+# question1()
+
+# Question 4
+
+def question4():
+
+  print("Newton Method:")
+
+  f = lambda x: (math.e**(3*x)) - (27*(x**6)) + (27*(x**4)*(math.e**x)) - (9*(x**2)*(math.e**(2*x)))
+  f_deriv = lambda x: (3*math.e**(3*x)) - (162*(x**5)) + (108*(x**3)*(math.e**x)) + (27*(x**4)*(math.e**x)) - (18*(x)*(math.e**(2*x))) - (18*(x**2)*(math.e**(2*x)))
+
+  g = lambda x: x - (f(x)/f_deriv(x))
+  Nmax = 100
+  tol = 1e-10
+
+  x0 = 4
+  [xstar,ier,approx,count] = fixedpt(g,x0,tol,Nmax)
+  print('the approximate fixed point is:',xstar)
+  print('g(xstar):',g(xstar))
+  print('Error message reads:',ier)
+  print('number of iterations = ', count)
+
+  print("2c Fix -- Multiply By m Method:")
+
+  m = 3
+  g2 = lambda x: x - m*(f(x)/f_deriv(x))
+  Nmax = 100
+  tol = 1e-10
+
+  x0 = 4
+  [xstar,ier,approx,count] = fixedpt(g2,x0,tol,Nmax)
+  print('the approximate fixed point is:',xstar)
+  print('g(xstar):',g2(xstar))
+  print('Error message reads:',ier)
+  print('number of iterations = ', count)
+
+  print("g = f/f' Fix Method:")
+
+  f_divf = lambda x: f(x)/f_deriv(x)
+  f_divf_deriv = lambda x: ((4374*(x**10)) + (729*(math.e**x)*(x**10)) - (2916*(math.e**x)*(x**9)) - (4374*(math.e**x)*(x**8)) - (972*(math.e**(2*x))*(x**8)) + (3888*(math.e**(2*x))*(x**7)) + (972*(math.e**(2*x))*(x**6)) + (486*(math.e**(3*x))*(x**6)) - (1944*(math.e**(3*x))*(x**5)) - (108*(math.e**(4*x))*(x**4)) + (324*(math.e**(3*x))*(x**4)) + (432*(math.e**(4*x))*(x**3)) + (9*(math.e**(5*x))*(x**2)) - (162**(math.e**(4*x))*(x**2)) - (36*(math.e**(5*x))) + (18*(math.e**(5*x)))) / ((f_deriv(x))**2)
+
+  g3 = lambda x: x - (f_divf(x)/f_divf_deriv(x))
+  Nmax = 100
+  tol = 1e-10
+
+  x0 = 4
+  # [xstar,ier,approx,count] = fixedpt(g3,x0,tol,Nmax)
+  # print('the approximate fixed point is:',xstar)
+  # print('g(xstar):',g3(xstar))
+  # print('Error message reads:',ier)
+  # print('number of iterations = ', count)
+
+
+
+question4()

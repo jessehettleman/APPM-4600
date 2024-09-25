@@ -2,6 +2,7 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 import scipy.special
+import pandas as pd
 
 def bisection(f,a,b,tol):
     
@@ -79,6 +80,41 @@ def fixedpt(f,x0,tol,Nmax):
     xstar = x1
     ier = 1
     return [xstar, ier,approx,count]
+
+def secant(x0,x1,f,Nmax,tol):
+
+  approx = np.zeros((Nmax,1))
+
+  count = 0
+  x2 = x1
+
+  if abs(f(x1) - f(x0)) == 0:
+    ier = 1
+    xstar = x1
+    approx[count] = x1
+    return [xstar, ier,approx,count]
+
+  for i in range(1,Nmax+1):
+    x2 = x1 - (f(x1) * ((x1 - x0)/(f(x1) - f(x0))))
+    approx[count] = x2
+    count += 1
+    
+    if abs(x2 - x1) < tol:
+      xstar = x2
+      ier = 0
+      return [xstar, ier,approx,count]
+
+    x0 = x1
+    x1 = x2
+
+    if(abs(f(x1) - f(x0))) == 0:
+      ier = 1
+      xstar = x2
+      return [xstar, ier,approx,count]
+
+  xstar = x2
+  ier = 1
+  return [xstar, ier,approx,count]
 
 # Question 1
 
@@ -178,4 +214,72 @@ def question4():
 
 
 
-question4()
+# question4()
+
+def question5():
+
+  f = lambda x: (x**6) - x - 1
+  f_deriv = lambda x: 6*(x**5) - 1
+
+  print("Newton Method:")
+
+  g = lambda x: x - (f(x)/f_deriv(x))
+
+  Nmax = 100
+  tol = 1e-10
+
+  x0 = 2
+  [xstar,ier,approx,count] = fixedpt(g,x0,tol,Nmax)
+  print('the approximate fixed point is:',xstar)
+  print('g(xstar):',g(xstar))
+  print('Error message reads:',ier)
+  print('number of iterations = ', count)
+  # print(approx)
+
+  newton_error = [abs(xstar - approx[i]) for i in range(0,count+1)]
+  iterations = list(range(1,count))
+
+  Newton = pd.DataFrame(list(zip(iterations, approx, newton_error)))
+  Newton.columns = ['Iteration','Estimate','Error']
+  print("\nNewton Method Error Table:\n")
+  print(Newton)
+  print("\n")
+
+
+  print("Secant Method:")
+
+  Nmax = 100
+  tol = 1e-10
+
+  x0 = 2
+  x1 = 1
+  [xstar,ier,approx,count] = secant(x0,x1,f,Nmax,tol)
+  print('the approximate fixed point is:',xstar)
+  print('f(xstar):',f(xstar))
+  print('Error message reads:',ier)
+  print('number of iterations = ', count)
+  # print(approx)
+
+  secant_error = [abs(xstar - approx[i]) for i in range(0,count+1)]
+  iterations = list(range(1,count))
+
+  Secant = pd.DataFrame(list(zip(iterations, approx, newton_error)))
+  Secant.columns = ['Iteration','Estimate','Error']
+  print("\nSecant Method Error Table:\n")
+  print(Secant)
+  print("\n")
+
+  plt.clf()
+  plt.figure(figsize=(10, 6))
+  plt.loglog(newton_error[:-1], newton_error[1:], 'bo-', label="Newton Method")
+  plt.loglog(secant_error[:-1], secant_error[1:], 'ro-', label="Secant Method")
+  plt.xlabel(r'$|x_k - \alpha|$', fontsize=14)
+  plt.ylabel(r'$|x_{k+1} - \alpha|$', fontsize=14)
+  plt.legend()
+  plt.grid(True, which="both", ls="--")
+  plt.savefig("HW4.5.b.png")
+
+
+question5()
+
+

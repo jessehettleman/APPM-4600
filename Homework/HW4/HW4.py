@@ -271,7 +271,7 @@ def question5():
 
   plt.clf()
   plt.figure(figsize=(10, 6))
-  plt.loglog(newton_error[:-1], newton_error[1:], 'bo-', label="Newton Method")
+  plt.loglog(newton_error[:-1], newton_error[1:], 'bo-', label="Newton Method") # need to take off first b/c undefined, and last to make same length
   plt.loglog(secant_error[:-1], secant_error[1:], 'ro-', label="Secant Method")
   plt.xlabel(r'$|x_k - \alpha|$', fontsize=14)
   plt.ylabel(r'$|x_{k+1} - \alpha|$', fontsize=14)
@@ -280,6 +280,6 @@ def question5():
   plt.savefig("HW4.5.b.png")
 
 
-question5()
+# question5()
 
 
